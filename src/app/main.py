@@ -1,10 +1,23 @@
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
-from app.api.routes.players import router as players_router
 
-app = FastAPI(title="Recall API")
-app.include_router(players_router)
+from app.api.router import api_router
+from app.db.session import engine
 
 
-@app.get("/health")
-async def health() -> dict[str, str]:
-    return {"status": "ok"}
+@asynccontextmanager
+async def lifespan(
+    _app: FastAPI,
+) -> AsyncGenerator[None, None]:
+    yield
+    await engine.dispose()
+
+
+app = FastAPI(
+    title="Recall API",
+    lifespan=lifespan,
+)
+
+app.include_router(api_router)
