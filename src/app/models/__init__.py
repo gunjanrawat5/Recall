@@ -1,3 +1,4 @@
 from app.models.player import Player
-
-__all__ = ["Player"]
+from app.models.user import User
+from app.models.explanation import Explanation
+__all__ = ["Player","User", "Explanation"]

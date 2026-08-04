@@ -10,6 +10,7 @@ dependencies = [
     "fastapi[standard]>=0.141.1",
     "httpx>=0.28.1",
     "pydantic-settings>=2.14.2",
+    "pydantic[email]>=2.13.4",
     "sqlalchemy[asyncio]>=2.0.51",
 ]
 
