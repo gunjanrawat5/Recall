@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.db.session import get_async_session
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
@@ -6,12 +8,14 @@ from app.schemas import UserUpdate
 from app.models import User
 from app.core.security.hash_password import hash_password
 
+
 class UserService:
     def __init__(self, db:AsyncSession) -> None:
         self.db = db
 
     async def get_user_by_id(self, id: uuid.UUID) -> User | None:
-        return await self.db.get(User,id)
+        user = await self.db.get(User,id)
+        return user
 
     async def get_user_by_email(self, email:str) -> User| None:
         statement = select(User).where(User.email == email)
@@ -72,5 +76,10 @@ class UserService:
         await self.db.refresh(user)
 
         return user
+
+def get_user_service(
+            db: AsyncSession = Depends(get_async_session)
+    ) -> UserService:
+        return UserService(db)
     
     
