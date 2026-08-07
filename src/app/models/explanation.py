@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class ExplanationMode(str, enum.Enum):
     CONCISE = "concise"
     BEGINNER = "beginner"
-    DETAILED = "deatiled"
+    DETAILED = "detailed"
 
 
 class Explanation(Base):
@@ -36,15 +36,15 @@ class Explanation(Base):
         Text,
         nullable=False
     )
-    surrounding_context: Mapped[str] = mapped_column(
+    surrounding_context: Mapped[str | None] = mapped_column(
         Text,
         nullable=True
     )
-    page_title: Mapped[str] = mapped_column(
+    page_title: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True
     )
-    page_url: Mapped[str] = mapped_column(
+    page_url: Mapped[str | None] = mapped_column(
         Text,
         nullable=True
     )
@@ -75,11 +75,11 @@ class Explanation(Base):
         nullable=False,
         default=list,
     )
-    example:Mapped[str] = mapped_column(
+    example:Mapped[str | None] = mapped_column(
         Text,
         nullable=True
     )
-    analogy: Mapped[str] = mapped_column(
+    analogy: Mapped[str | None] = mapped_column(
         Text,
         nullable=True
     )
