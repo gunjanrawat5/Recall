@@ -36,3 +36,10 @@ class ExplanationResponse(BaseModel):
     analogy: str | None = None
     created_at: datetime
 
+class LLMResult(BaseModel):
+    content: GeneratedExplanation
+    model_name: str
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    latency_ms: int | None = None
+

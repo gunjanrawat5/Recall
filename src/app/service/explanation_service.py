@@ -30,13 +30,16 @@ class ExplanationService:
             page_url=data.page_url,
             mode=data.mode,
 
-            summary=generated.summary,
-            explanation=generated.explanation,
-            key_points=generated.key_points,
-            example=generated.example,
-            analogy=generated.analogy,
+            summary=generated.content.summary,
+            explanation=generated.content.explanation,
+            key_points=generated.content.key_points,
+            example=generated.content.example,
+            analogy=generated.content.analogy,
 
-            model_name="fake-model",
+            model_name=generated.model_name,
+            input_tokens=generated.input_tokens,
+            output_tokens=generated.output_tokens,
+            latency_ms=generated.latency_ms,
         )
 
         self.db.add(explanation)
