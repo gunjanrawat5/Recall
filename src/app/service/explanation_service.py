@@ -6,7 +6,7 @@ import uuid
 
 from app.schemas import ExplanationResponse, ExplanationCreate, GeneratedExplanation
 from app.models import Explanation
-from app.service.llm_service import LLMService
+from app.service.llm_service import LLMService, get_llm_service
 
 class ExplanationService:
     def __init__(self, db:AsyncSession, llm_service: LLMService) -> None:
@@ -48,3 +48,8 @@ class ExplanationService:
     async def get_explanation_by_id(self, exp_id: uuid.UUID)-> Explanation | None:
         explanation =  await self.db.get(Explanation, exp_id)
         return explanation
+
+def get_explanation_service(
+            db: AsyncSession = Depends(get_async_session), llm_service: LLMService = Depends(get_llm_service)
+    ) -> ExplanationService:
+        return ExplanationService(db,llm_service)

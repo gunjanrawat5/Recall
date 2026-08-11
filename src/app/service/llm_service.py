@@ -1,15 +1,6 @@
 from app.schemas import ExplanationCreate, GeneratedExplanation
 
-from fastapi import Depends
-from app.db.session import get_async_session
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
-
 class LLMService:
-    def __init__(self, db : AsyncSession) -> None:
-        self.db = db
-
     async def generate_explanation(self, data:ExplanationCreate) -> GeneratedExplanation:
         return GeneratedExplanation(
             summary="Temporary summary",
@@ -21,3 +12,6 @@ class LLMService:
             example=None,
             analogy=None,
         )
+
+def get_llm_service() -> LLMService:
+        return LLMService()
