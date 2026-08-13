@@ -7,7 +7,6 @@ from app.models.explanation import ExplanationMode
 
 
 class ExplanationCreate(BaseModel):
-    user_id: uuid.UUID
     selected_text: str = Field(min_length=1)
     surrounding_context: str | None = None
     page_title: str | None = None
