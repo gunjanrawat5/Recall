@@ -1,11 +1,11 @@
-from typing import Annotated
+
 import uuid
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-from sqlalchemy.ext.asyncio import AsyncSession
 from app.service.explanation_service import (get_explanation_service, ExplanationService)
-from app.db.session import get_async_session
-from app.models.explanation import Explanation,ExplanationMode
-from app.schemas.explanation import ExplanationCreate,ExplanationResponse,GeneratedExplanation
+from app.models.explanation import Explanation
+from app.schemas.explanation import ExplanationCreate,ExplanationResponse
+from app.core.security.current_user import get_current_user
+from app.models.user import User
 
 
 router = APIRouter(
@@ -19,13 +19,12 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED
 )
 async def create_explanation(
-    user_id: uuid.UUID,
     data:ExplanationCreate,
-    response:Response,
+    current_user: User = Depends(get_current_user),
     explanation_service: ExplanationService = Depends(get_explanation_service),
 ) -> Explanation:
     return await explanation_service.create_explanation(
-        user_id=user_id,
+        user_id=current_user.id,
         data=data
     )
 
@@ -35,12 +34,13 @@ async def create_explanation(
 )
 async def get_explanation_by_id(
     exp_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
     explanation_service: ExplanationService = Depends(
         get_explanation_service
     ),
 ) -> Explanation:
 
-    explanation = await explanation_service.get_explanation_by_id(exp_id)
+    explanation = await explanation_service.get_explanation_by_id(exp_id, user_id=current_user.id)
 
     if explanation is None:
         raise HTTPException(
@@ -49,4 +49,14 @@ async def get_explanation_by_id(
         )
 
     return explanation
+
+@router.get(
+    "",
+    response_model=list[ExplanationResponse]
+)
+async def get_explanations(
+    current_user:User = Depends(get_current_user),
+    explanation_service: ExplanationService = Depends(get_explanation_service)
+) -> list[Explanation]:
+    return await explanation_service.get_explanations(current_user.id)
     
