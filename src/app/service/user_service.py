@@ -6,7 +6,7 @@ import uuid
 from app.schemas import UserCreate
 from app.schemas import UserUpdate
 from app.models import User
-from app.core.security.hash_password import hash_password
+from app.core.security.password import hash_password
 
 
 class UserService:
