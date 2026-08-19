@@ -2,6 +2,40 @@
 
 Recall is an AI-powered learning assistant designed to help users understand difficult content while they are reading online.
 
+## Repository Structure
+
+```text
+recall/
+├── backend/   # FastAPI, SQLAlchemy, Alembic, and Python dependencies
+└── frontend/  # Vite, React, and TypeScript
+```
+
+## Local Development
+
+### Backend
+
+The backend reads its configuration from `backend/.env`.
+
+```bash
+cd backend
+uv sync
+uv run fastapi dev src/app/main.py
+```
+
+Run database migrations from the same directory:
+
+```bash
+uv run alembic upgrade head
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 The goal of the project is to reduce the friction between encountering something confusing and actually understanding it. Instead of leaving a webpage, opening a separate AI tool, copying text, adding context, and manually organizing the response, Recall aims to make that learning workflow available directly alongside the content the user is reading.
 
 ## Project Aim
