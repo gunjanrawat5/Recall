@@ -3,6 +3,7 @@ from google.genai import types
 import time
 from app.core.config import settings
 from app.schemas import ExplanationCreate, GeneratedExplanation, LLMResult
+from app.models.explanation import ExplanationMode
 
 class LLMService:
 
@@ -45,33 +46,74 @@ class LLMService:
             latency_ms=latency_ms,
         )
 
-    def _build_prompt(self,data:ExplanationCreate) -> str:
-         return f"""
-            You are an educational assistant.
+    def _build_prompt(self, data: ExplanationCreate) -> str:
+            mode_instructions = self._get_mode_instructions(data.mode)
 
-            Explain the selected text according to the requested explanation mode.
+            return f"""
+        You are an educational assistant.
 
-            MODE:
-            {data.mode.value}
+        Your job is to explain the selected text accurately using the surrounding context.
 
-            SELECTED TEXT:
-            {data.selected_text}
+        SELECTED TEXT:
+        {data.selected_text}
 
-            SURROUNDING CONTEXT:
-            {data.surrounding_context or "No additional context provided."}
+        SURROUNDING CONTEXT:
+        {data.surrounding_context or "No additional context provided."}
 
-            PAGE TITLE:
-            {data.page_title or "Unknown"}
+        PAGE TITLE:
+        {data.page_title or "Unknown"}
 
-            Return a useful educational explanation.
+        EXPLANATION MODE:
+        {data.mode.value}
 
-            Guidelines:
-            - summary should be short and clear
-            - explanation should explain the concept thoroughly
-            - key_points should contain the most important takeaways
-            - example should be included when useful
-            - analogy should be included when useful
-            """
+        MODE-SPECIFIC INSTRUCTIONS:
+        {mode_instructions}
 
+        GENERAL REQUIREMENTS:
+        - Stay faithful to the selected text and surrounding context.
+        - Do not invent facts that are not supported by the text or general established knowledge.
+        - Define important technical terms when necessary.
+        - Prefer clarity over unnecessary jargon.
+        - Make the explanation self-contained.
+        - Avoid repeating the same idea across summary, explanation, key points, example, and analogy.
+    """
+
+    def _get_mode_instructions(
+        self,
+        mode: ExplanationMode,
+    ) -> str:
+
+        if mode == ExplanationMode.CONCISE:
+            return """
+    - Give a very short explanation.
+    - Focus only on the core meaning.
+    - Keep the explanation to roughly 2-4 sentences.
+    - Return 2-3 key points.
+    - Only include an example or analogy if it significantly improves understanding.
+    """
+
+        if mode == ExplanationMode.BEGINNER:
+            return """
+    - Assume the reader has little or no prior knowledge.
+    - Explain unfamiliar terminology in simple language.
+    - Build the idea from basic concepts before introducing technical details.
+    - Use a concrete example.
+    - Use an intuitive analogy when appropriate.
+    - Return 3-5 key points.
+    """
+
+        if mode == ExplanationMode.DETAILED:
+            return """
+    - Give a thorough technical explanation.
+    - Explain how and why the concept works, not only what it means.
+    - Include relevant mechanisms, relationships, or underlying concepts.
+    - Clarify important terminology.
+    - Mention useful nuances or limitations when relevant.
+    - Include a concrete example.
+    - Return 4-7 key points.
+    """
+
+        raise ValueError(f"Unsupported explanation mode: {mode}")
+    
 def get_llm_service() -> LLMService:
         return LLMService()
