@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AuthButton } from '../../auth/components/AuthButton'
 import type { ExplanationLevel } from '../explanationTypes'
 import { ExportDestinations } from './ExportDestinations'
 import { ModelSelector } from './ModelSelector'
@@ -18,7 +19,7 @@ export function ExplanationForm({ selectedText }: ExplanationFormProps) {
           <span className="eyebrow">RECALL</span>
           <h2>Understand anything.</h2>
         </div>
-        <span className="spark" aria-hidden="true">✦</span>
+        <AuthButton />
       </header>
 
       <SelectedTextPreview text={selectedText} />

@@ -22,7 +22,13 @@ async def create_user(
     user_data: UserCreate,
     user_service : UserService = Depends(get_user_service)
 ) -> User:
-    return await user_service.create_user(user_data)
+    try:
+        return await user_service.create_user(user_data)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(exc),
+        ) from exc
 
 @router.get(
     "/id/{user_id}",

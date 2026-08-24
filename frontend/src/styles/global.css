@@ -31,7 +31,12 @@ button, select { -webkit-tap-highlight-color: transparent; }
 .panel-heading, .panel-section { padding: 26px 28px; border-bottom: 1px solid #393936; }
 .panel-heading { min-height: 104px; display: flex; align-items: flex-start; justify-content: space-between; }
 .panel-heading h2 { margin: 8px 0 0; color: #f2f2ef; font-size: 19px; font-weight: 500; letter-spacing: -.03em; }
-.spark { width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid #494946; border-radius: 50%; color: #aaa9a4; }
+.login-button { min-width: 70px; height: 34px; padding: 0 14px; border: 1px solid #5a5a56; border-radius: 7px; color: #e5e5df; background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s; }
+.login-button:hover { border-color: #8a8a84; background: #292929; }
+.auth-loading { padding-top: 7px; color: #777773; font-size: 11px; }
+.account-control { max-width: 145px; display: flex; align-items: center; gap: 9px; }
+.account-control span { overflow: hidden; color: #b8b8b3; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.account-control button { padding: 5px 8px; border: 1px solid #484844; border-radius: 6px; color: #858581; background: transparent; font-size: 10px; white-space: nowrap; cursor: pointer; }
 .panel-section label { display: block; margin-bottom: 12px; color: #aaa9a5; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .selection-card { min-height: 102px; padding: 16px; border: 1px solid #41413e; border-radius: 8px; color: #cecec9; background: #191919; font-family: 'DM Serif Display', Georgia, serif; font-size: 16px; line-height: 1.5; }
 .checkbox-list { display: grid; gap: 8px; }
@@ -52,6 +57,21 @@ select { appearance: none; padding: 0 34px 0 13px; border: 1px solid #454541; co
 .explain-button { border: 1px solid #e5e5df; color: #121212; background: #e5e5df; font-weight: 600; transition: background .2s, transform .2s; }
 .explain-button:hover { background: white; transform: translateY(-1px); }
 .explain-button span { margin-right: 5px; }
+
+.auth-overlay { position: fixed; z-index: 20; inset: 0; padding: 20px; display: grid; place-items: center; background: rgba(0,0,0,.76); backdrop-filter: blur(7px); }
+.auth-dialog { position: relative; width: min(100%, 410px); padding: 34px; border: 1px solid #42423e; border-radius: 12px; color: #d9d9d4; background: #1b1b1b; box-shadow: 0 30px 90px rgba(0,0,0,.7); }
+.auth-dialog h2 { margin: 11px 0 8px; color: #f3f3ef; font-family: 'DM Serif Display', Georgia, serif; font-size: 30px; font-weight: 400; }
+.auth-dialog > p { margin: 0 0 27px; color: #858581; font-size: 13px; line-height: 1.5; }
+.auth-close { position: absolute; top: 14px; right: 16px; width: 30px; height: 30px; border: 0; color: #878782; background: transparent; font-size: 24px; cursor: pointer; }
+.auth-dialog form { display: grid; }
+.auth-dialog form label { margin: 0 0 7px; color: #aaa9a5; font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+.auth-dialog form input { height: 44px; margin-bottom: 16px; padding: 0 13px; border: 1px solid #444440; border-radius: 7px; color: #e5e5df; background: #121212; font: inherit; font-size: 14px; outline: none; }
+.auth-dialog form input:focus { border-color: #898984; box-shadow: 0 0 0 2px rgba(255,255,255,.07); }
+.auth-error { margin: -3px 0 14px; padding: 10px 12px; border: 1px solid #653f3f; border-radius: 6px; color: #e1b0b0; background: #2b1919; font-size: 12px; }
+.auth-submit { height: 44px; margin-top: 3px; border: 1px solid #e5e5df; border-radius: 7px; color: #111; background: #e5e5df; font-weight: 600; cursor: pointer; }
+.auth-submit:disabled { opacity: .55; cursor: wait; }
+.auth-switch { width: 100%; margin-top: 17px; border: 0; color: #92928d; background: transparent; font-size: 12px; cursor: pointer; }
+.auth-switch:hover { color: #d1d1cc; }
 
 @media (max-width: 900px) {
   .workspace { grid-template-columns: 1fr; }
