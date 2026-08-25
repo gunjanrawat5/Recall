@@ -7,3 +7,7 @@ export function createExplanation(request: ExplanationRequest) {
     body: JSON.stringify(request),
   })
 }
+
+export function getExplanations() {
+  return apiClient<ExplanationResponse[]>('/explanations')
+}

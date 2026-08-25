@@ -56,7 +56,27 @@ select, .explain-button { width: 100%; height: 42px; border-radius: 7px; cursor:
 select { appearance: none; padding: 0 34px 0 13px; border: 1px solid #454541; color: #d5d5d0; background: #191919; outline: none; }
 .explain-button { border: 1px solid #e5e5df; color: #121212; background: #e5e5df; font-weight: 600; transition: background .2s, transform .2s; }
 .explain-button:hover { background: white; transform: translateY(-1px); }
+.explain-button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 .explain-button span { margin-right: 5px; }
+.login-required, .explanation-error { grid-column: 1 / -1; margin: 0; font-size: 11px; line-height: 1.45; }
+.login-required { color: #777773; }
+.explanation-error { padding: 9px 10px; border: 1px solid #653f3f; border-radius: 6px; color: #e1b0b0; background: #2b1919; }
+
+.result-section { background: #1d1d1d; }
+.result-heading { display: flex; align-items: center; justify-content: space-between; }
+.result-heading label { margin: 0; }
+.result-heading span { color: #73736f; font-size: 10px; text-transform: capitalize; }
+.result-section h3 { margin: 17px 0 10px; color: #e2e2dd; font-family: 'DM Serif Display', Georgia, serif; font-size: 19px; font-weight: 400; line-height: 1.35; }
+.result-copy, .result-empty { margin: 0; color: #aaa9a4; font-size: 13px; line-height: 1.7; }
+.key-points { margin: 18px 0 0; padding-left: 17px; color: #989893; font-size: 12px; line-height: 1.65; }
+.key-points li + li { margin-top: 7px; }
+.result-detail { margin-top: 18px; padding: 13px; border: 1px solid #3b3b38; border-radius: 7px; background: #191919; }
+.result-detail strong { display: block; margin-bottom: 6px; color: #858581; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.result-detail p { margin: 0; color: #aaa9a4; font-size: 12px; line-height: 1.6; }
+.history-list { margin-top: 22px; padding-top: 17px; display: grid; gap: 6px; border-top: 1px solid #393936; }
+.history-list > span { margin-bottom: 3px; color: #73736f; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.history-list button { overflow: hidden; padding: 8px 10px; border: 1px solid transparent; border-radius: 5px; color: #777773; background: transparent; font-size: 11px; text-align: left; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.history-list button:hover, .history-list button.active { border-color: #41413e; color: #c2c2bd; background: #191919; }
 
 .auth-overlay { position: fixed; z-index: 20; inset: 0; padding: 20px; display: grid; place-items: center; background: rgba(0,0,0,.76); backdrop-filter: blur(7px); }
 .auth-dialog { position: relative; width: min(100%, 410px); padding: 34px; border: 1px solid #42423e; border-radius: 12px; color: #d9d9d4; background: #1b1b1b; box-shadow: 0 30px 90px rgba(0,0,0,.7); }
